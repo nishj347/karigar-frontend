@@ -175,8 +175,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 ),
               ),
             );
+          } else if (index == 3) {
+            Navigator.pushNamed(context, '/profile');
           }
         },
+
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
