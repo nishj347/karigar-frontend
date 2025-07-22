@@ -1,23 +1,34 @@
+
 import 'package:flutter/material.dart';
 import 'edit_profile_page.dart';
 import 'manage_address_page.dart';
+import '../home_page.dart';
+import '../cart_page.dart';
+import '../orders_page.dart';
+
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    const primaryColor = Color(0xFFFD7A00); // Slightly lighter MP theme color
-    const backgroundColor = Color(0xFFFFF3E0);
+      const primaryColor = Color(0xFFFD7A00);
+      const backgroundColor = Color(0xFFFFF3E0);
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: backgroundColor,
         elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: const Text('Profile', style: TextStyle(color: Colors.black)),
         centerTitle: true,
-        automaticallyImplyLeading: false,
       ),
+
       backgroundColor: backgroundColor,
       body: Column(
         children: [
@@ -29,7 +40,7 @@ class ProfilePage extends StatelessWidget {
               children: [
                 const CircleAvatar(
                   radius: 32,
-                  backgroundImage: AssetImage('assets/user1.png'), // 🔁 Change image here
+                  backgroundImage: AssetImage('/assets/user.png'), // 🔁 Change image here
                 ),
                 const SizedBox(width: 16),
                 Expanded(
@@ -77,6 +88,31 @@ class ProfilePage extends StatelessWidget {
         unselectedItemColor: Colors.white70,
         backgroundColor: primaryColor,
         type: BottomNavigationBarType.fixed,
+        onTap: (index) {
+          if (index == 0) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => const HomePageWidget()),
+            );
+          } else if (index == 1) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (_) => CartPage(
+                  cartItems: const [],
+                  onRemoveItem: (item) {}, // dummy callback for now
+                ),
+              ),
+            );
+          } else if (index == 2) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (_) => OrdersPage(orders: const []),
+              ),
+            );
+          }
+        },
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),

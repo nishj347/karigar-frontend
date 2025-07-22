@@ -4,6 +4,9 @@ import 'package:karigar/pages/cart_page.dart';
 import 'package:karigar/pages/orders_page.dart';
 import 'package:karigar/pages/subcategory/electrician_subcategory.dart';
 
+const primaryColor = Color(0xFFFD7A00);
+const backgroundColor = Color(0xFFFFF3E0);
+
 class HomePageWidget extends StatefulWidget {
   const HomePageWidget({super.key});
 
@@ -44,20 +47,13 @@ class _HomePageWidgetState extends State<HomePageWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: backgroundColor,
       appBar: AppBar(
         title: const Text("Karigar"),
-        backgroundColor: const Color(0xFFB4311A),
-
+        backgroundColor: primaryColor,
       ),
       body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xFFFD7A00), Color(0xFFB41F00)],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
+        color: backgroundColor,
         child: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,7 +62,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 padding: EdgeInsets.only(left: 20.0, top: 10),
                 child: Text(
                   "Hello Guest!",
-                  style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 22, color: Colors.black, fontWeight: FontWeight.bold),
                 ),
               ),
               Padding(
@@ -75,9 +71,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   children: [
                     TextFormField(
                       decoration: InputDecoration(
-                        prefixIcon: const Icon(Icons.search, color: Colors.white),
+                        prefixIcon: const Icon(Icons.search, color: Colors.black54),
                         filled: true,
-                        fillColor: Colors.white.withOpacity(0.2),
+                        fillColor: Colors.white,
                         contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30),
@@ -85,7 +81,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                         ),
                         hintText: '',
                       ),
-                      style: const TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.black),
                     ),
                     Positioned(
                       left: 55,
@@ -97,7 +93,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             TypewriterAnimatedText(
                               'Search for services...',
                               textStyle: const TextStyle(
-                                color: Colors.white70,
+                                color: Colors.black45,
                                 fontSize: 16,
                               ),
                               speed: const Duration(milliseconds: 100),
@@ -117,7 +113,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 padding: EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
                   "Category",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
                 ),
               ),
               const SizedBox(height: 8),
@@ -139,7 +135,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 padding: EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
                   "For You",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black),
                 ),
               ),
               const SizedBox(height: 8),
@@ -159,34 +155,57 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: const Color(0xFFB4311A),
-        currentIndex: 0,
-        selectedItemColor: Colors.red,
-        unselectedItemColor: Colors.red,
-        onTap: (index) {
-          if (index == 1) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => OrdersPage(
-                  orders: cartItems,
-                  onRemoveOrder: _removeItemFromCart,
-                ),
-              ),
-            );
-          } else if (index == 3) {
-            Navigator.pushNamed(context, '/profile');
-          }
-        },
-
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
-          BottomNavigationBarItem(icon: Icon(Icons.notifications), label: 'Alerts'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-        ],
+      bottomNavigationBar: Container(
+        decoration: const BoxDecoration(
+          color: primaryColor,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(24),
+            topRight: Radius.circular(24),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black26,
+              blurRadius: 10,
+              offset: Offset(0, -2),
+            )
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(24),
+            topRight: Radius.circular(24),
+          ),
+          child: BottomNavigationBar(
+            backgroundColor: primaryColor,
+            type: BottomNavigationBarType.fixed,
+            selectedItemColor: Colors.white,
+            unselectedItemColor: Colors.white70,
+            currentIndex: 0,
+            onTap: (index) {
+              if (index == 1) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => OrdersPage(
+                      orders: cartItems,
+                      onRemoveOrder: _removeItemFromCart,
+                    ),
+                  ),
+                );
+              } else if (index == 3) {
+                Navigator.pushNamed(context, '/profile');
+              }
+            },
+            items: const [
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+              BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
+              BottomNavigationBarItem(icon: Icon(Icons.receipt_long), label: 'Orders'),
+              BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+            ],
+          ),
+        ),
       ),
+
     );
   }
 
@@ -197,14 +216,14 @@ class _HomePageWidgetState extends State<HomePageWidget> {
         width: 90,
         margin: const EdgeInsets.only(right: 12),
         decoration: BoxDecoration(
-          color: const Color(0xFFFFF3E0),
+          color: backgroundColor,
           borderRadius: BorderRadius.circular(50),
         ),
         padding: const EdgeInsets.all(12),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: 28, color: const Color(0xFFFD7A00)),
+            Icon(icon, size: 28, color: primaryColor),
             const SizedBox(height: 6),
             Text(title, textAlign: TextAlign.center, style: const TextStyle(fontSize: 12)),
           ],
